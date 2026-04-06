@@ -57,6 +57,7 @@ venv\Scripts\activate
 
 
 Mac: 
+
 python3 -m venv venv
 source venv/bin/activate
 
