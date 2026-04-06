@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Bus Pass System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+             padding: 0;
+   
+        }
+
+        body {
+
+            /* Background Image with Gradient Overlay */
+            background: linear-gradient( rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.1)
+            ), url("{{ url_for('static', filename='images/wallpaper.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            padding-top: 80px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Navbar Styles (unchanged) */
+        .msrtc-navbar {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .msrtc-logo {
+            height: 50px;
+            margin-right: 1px;
+        }
+        .msrtc-title {
+            font-family: 'Tiro Devanagari Marathi',cursive;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            font-size: 28px;
+            font-weight: 800;
+            text-align: center;
+            color: #ff7b00; 
+            letter-spacing: 1.6px;
+            margin-top: 1px; 
+        }
+        .studentlogo{
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: 58px;
+            background: -webkit-linear-gradient(white,#125b83,rgb(150, 198, 225));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;         
+        }
+
+        .nav-brand-text {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-brand-text small {
+            font-size: 0.8rem;
+            display: block;
+            font-weight: normal;
+            letter-spacing: 0.5px;
+        }
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 1px 5px;
+            transition: all 0.3s;
+        }
+        .nav-link:hover {
+            color: #fb9302 !important;
+            transform: translateY(-2px);
+        }
+        .admin-btn-nav {
+            background: #9d7334;
+            border-radius: 25px;
+            padding: 2px 8px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .admin-btn-nav:hover {
+            background: #f57c00;
+            transform: scale(1.05);
+        }
+        
+        /* 🎯 CONTAINER - RIGHT SIDE FLOAT */
+        .right-container {
+            float:center;
+            width: 60%;
+            margin: 50px 0;
+            opacity: 0.9;
+            margin-right: 0;
+        }
+        
+        /* Hero Section - Transparent Background */
+        .hero-section {
+            background: rgb(255, 255, 255);
+            border-radius: 20px;
+            padding: 30px 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
+            border: 3px solid rgba(18, 236, 15, 0.93);
+        }
+        
+        .btn-custom {
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            margin: 10px;
+            width: 220px;
+            transition: all 0.3s;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        /* Features */
+        .feature-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s;
+            border: 1px solid #e9ecef;
+        }
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background: white;
+        }
+        
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.60);
+            color: white;
+            padding: 10px 0;
+            margin-top: 50px;
+            border-radius: 10px 10px 0 0;
+            clear: both; 
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .right-container {
+                float: none;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar (unchanged) -->
+    <nav class="navbar navbar-expand-lg msrtc-navbar">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ url_for('static', filename='images/Logo.png') }}" 
+                     alt="MSRTC Logo" 
+                     style="height: 80px; margin-right: 25px;">
+                <div class="nav-brand-text">
+                    Maharashtra State Road Transport Corporation
+                    <small>Student Bus Pass Portal</small>
+                </div>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon">
+                    <i class="fas fa-bars text-white"></i>
+                </span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home me-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-info-circle me-1"></i> Guidelines
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-phone-alt me-1"></i> Contact
+                        </a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a href="/admin/login" class="btn admin-btn-nav">
+                            <i class="fas fa-user-shield me-1"></i> Admin Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content - Container floated right -->
+    <div class="container">
+        <div class="right-container">
+            <div class="hero-section">
+                <div class="text-center mb-4">
+                    <img src="{{ url_for('static', filename='images/PassLogo.png') }}" 
+                         alt="MSRTC Logo" 
+                         style="height: 120px; width: 120px; margin-bottom: 10px;"><br>
+                    <img src="{{ url_for('static', filename='images/HeadText.png') }}" 
+                         alt="MSRTC" 
+                         style="height: 50px; width: 500px; max-width: 100%;">
+                </div>
+
+                <h1 class="studentlogo text-center" style="font-weight: bold;">Student Bus Pass System</h1>
+                <p class="lead text-center mb-5" style="color: #4e73df; font-weight: 300;">
+                    Apply for your college bus pass online. Easy, Fast & Secure.
+                </p>
+                
+                <div class="text-center mt-5">
+                    <a href="/login" class="btn btn-primary btn-custom">
+                        <i class="fas fa-sign-in-alt me-2"></i> Student Login
+                    </a>
+                    <a href="/signup" class="btn btn-success btn-custom">
+                        <i class="fas fa-user-plus me-2"></i> Student Signup
+                    </a>
+                </div>
+                
+                <div class="features mt-5">
+                    <h3 class="mb-4 text-secondary text-center">Why Choose Our Service?</h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="feature-item p-3 text-center">
+                                <div class="feature-icon mb-3">
+                                    <i class="fas fa-mobile-alt fa-2x text-primary"></i>
+                                </div>
+                                <h5>📱 Online Application</h5>
+                                <p>Apply from anywhere, anytime</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-item p-3 text-center">
+                                <div class="feature-icon mb-3">
+                                    <i class="fas fa-credit-card fa-2x text-success"></i>
+                                </div>
+                                <h5>💳 Easy Payment</h5>
+                                <p>Secure online payment</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-item p-3 text-center">
+                                <div class="feature-icon mb-3">
+                                    <i class="fas fa-file-pdf fa-2x text-danger"></i>
+                                </div>
+                                <h5>📄 Digital Pass</h5>
+                                <p>Download PDF with QR code</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Info Cards -->
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card border-primary mb-3">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Quick Process</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-0">Complete in just 10 minutes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-success mb-3">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0"><i class="fas fa-shield-alt me-2"></i>Secure & Verified</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-0">100% secure with verification</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-bus me-2"></i>MSRTC Student Pass</h5>
+                    <p>Official portal for student bus passes in Maharashtra</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">
+                        <i class="fas fa-phone me-1"></i> Helpline: 1800-22-1251<br>
+                        <i class="fas fa-envelope me-1"></i> Email: studentpass@msrtc.gov.in
+                    </p>
+                </div>
+            </div>
+            <hr class="bg-light my-3">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="mb-0">
+                        © 2024 Maharashtra State Road Transport Corporation. All Rights Reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Bus Pass</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- QR Code Generator -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <!-- PDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            background: #f8f9fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 30px 0;
+        }
+        .pass-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        /* MODERN BUS PASS CARD - PROFESSIONAL & CLEAN */
+        .bus-pass {
+            width: 750px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 25px 30px;
+            position: relative;
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s;
+            background: linear-gradient(145deg, #ffffff, #fafafa);
+        }
+        .bus-pass:hover {
+            transform: scale(1.01);
+        }
+        /* Header with College Name */
+        .nav-brand-text {
+            color:  #e74a3b;
+           
+            text-decoration: underline #e74a3b ;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .msrtc-logo {
+            height: 50px;
+            margin-right: 1px;
+        }
+        .pass-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #4e73df;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .college-title h2 {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0;
+            margin-top: 15px;
+            font-size: 26px;
+        }
+        .college-title p {
+            margin-bottom: 0;
+            color: #6c757d;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        .pass-badge {
+            background: #4e73df;
+            margin-top: 15px;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 10px rgba(78,115,223,0.3);
+        }
+        /* Student Photo */
+        .photo-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 130px;
+            float: left;
+            margin-right: 25px;
+            
+            border-radius: 15px;
+            padding: 10px;
+            background: #f8f9fc;
+        }
+        .student-photo {
+            width: 140px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #000000;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .photo-caption {
+            margin-top: 5px;
+            font-size: 0.75rem;
+            color: #6c757d;
+            font-weight: 600;
+        }
+        /* Details Table */
+        .details-table {
+            width: calc(100% - 155px);
+            float: left;
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 5px 0;
+        }
+        .details-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .details-table td {
+            padding: 8px 5px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.95rem;
+        }
+        .details-table td:first-child {
+            font-weight: 600;
+            color: #4e73df;
+            width: 38%;
+        }
+        .details-table tr:last-child td {
+            border-bottom: none;
+        }
+        .pass-id-highlight {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            color: #856404;
+        }
+        /* QR Code & Verification */
+        .qr-verification {
+            clear: both;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px dashed #4e73df;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .qr-code-box {
+            background: white;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .verification-text {
+            flex: 1;
+            background: #f0f7ff;
+            padding: 15px 20px;
+            border-radius: 15px;
+            border-left: 5px solid #1cc88a;
+        }
+        .verification-text strong {
+            color: #1cc88a;
+            font-size: 1.1rem;
+        }
+        /* Footer Stamp */
+        .pass-footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .validity-info {
+            background: #e8f5e9;
+            padding: 12px 20px;
+            border-radius: 30px;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+        .stamp {
+            text-align: center;
+            color: #b22222;
+            margin-bottom: -10px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            margin-right: 30px;
+            border: 2px solid #b22222;
+            padding: 3px 5px;
+            border-radius: 20px;
+            transform: rotate(0deg);
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            opacity: 40%;
+        }
+        .stamp span {
+            font-size: 0.9rem;
+
+        }
+        .stamp1 {
+            position: absolute;
+            top: 85%;
+            right: 60px;
+            transform: translateY(-50%) rotate(340deg);
+            opacity: 70%;
+        }
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        /* Download Button */
+        .action-buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .btn-pdf {
+            background: #e74a3b;
+            color: white;
+            font-weight: 700;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            border: none;
+            box-shadow: 0 8px 15px rgba(231,76,60,0.3);
+            transition: 0.3s;
+        }
+        .btn-pdf:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(231,76,60,0.4);
+        }
+        .btn-dashboard {
+            background: #6c757d;
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Heading -->
+        <div class="text-center mb-4">
+            <h2 class="fw-bold"><i class="fas fa-ticket-alt text-primary"></i> Your Bus Pass</h2>
+            <p class="text-muted">Download as PDF and show to conductor for verification</p>
+        </div>
+
+        <!-- Bus Pass Card (will be captured as PDF) -->
+        <div class="pass-wrapper">
+            <div id="passContainer" class="bus-pass">
+                <!-- Header -->
+               
+                 <div class="nav-brand-text">
+                    <div class="msrtc-logo-placeholder">
+                   <img src="{{ url_for('static', filename='images/PassLogo.png') }}" 
+                        alt="MSRTC Logo" 
+                        style="height: 70px; margin-right: 25px;">
+                
+                    Maharashtra State Road Transport Corporation
+                    </div>
+                </div>
+                 <div class="pass-header">
+                    <div class="college-title">
+                        <h2><i class="fas fa-bus me-2"></i> {{ pass_app.college }} </h2>
+                        <p>BUS PASS • ACADEMIC YEAR 2025-26</p>
+                    </div>
+                    <div class="pass-badge">
+                        {{ pass_app.pass_type }}
+                    </div>
+                </div>
+
+                <!-- Student Photo + Details (Clearfix) -->
+                <div class="clearfix">
+                    <!-- Student Photo -->
+                    <div class="photo-area">
+                        <div class="student-photo">
+                            {% if pass_app.student_photo_file %}
+                                <img src="/static/uploads/{{ pass_app.student_photo_file }}" 
+                                     alt="Student Photo" 
+                                     style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                            {% else %}
+                                <i class="fas fa-user-graduate fa-4x text-secondary"></i>
+                                <br><small>No Photo</small>
+                            {% endif %}
+                        </div>
+                        
+                    </div>
+
+                    <!-- Student & Pass Details -->
+                    <div class="details-table">
+                        <table>
+                            <tr>
+                                <td><i class="fas fa-user me-2"></i> Student Name</td>
+                                <td><strong>{{ pass_app.name }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-qrcode me-2"></i> Register No.</td>
+                                <td>{{ pass_app.register_no }}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-graduation-cap me-2"></i> Course & Year</td>
+                                <td>{{ pass_app.course }} - Year {{ pass_app.year }}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-calendar-alt me-2"></i> Date of Birth</td>
+                                <td><strong>{{ pass_app.dob.strftime('%d/%m/%Y') if pass_app.dob else 'N/A' }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-map-marker-alt me-2"></i> Route</td>
+                                <td>{{ pass_app.travel_from }} → {{ pass_app.travel_to }}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-clock me-2"></i> Pass Duration</td>
+                                <td>{{ pass_app.duration }}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-tag me-2"></i> Pass ID</td>
+                                <td><span class="pass-id-highlight">{{ pass_app.unique_pass_id }}</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- QR CODE + VERIFICATION SECTION -->
+                <div class="qr-verification">
+                    <div class="qr-code-box" >
+                        <div id="qrCode" class="qr-code"></div>
+                        <small class="text-muted mt-1" >Scan to verify</small>
+                    </div>
+                    <div class="verification-text">
+                        <strong><i class="fas fa-shield-alt"></i> CONDUCTOR VERIFICATION</strong>
+                        <p class="mb-0 mt-1">
+                            <i class="fas fa-check-circle text-success"></i> Unique Pass ID: <b>{{ pass_app.unique_pass_id }}</b><br>
+                            <span class="small">Scan QR code or visit collegebuspass.com/verify and enter Pass ID.</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Validity & Stamp -->
+                <div class="pass-footer">
+                    <div class="validity-info">
+                        <i class="fas fa-calendar-alt me-1"></i> 
+                        <strong>Validity:</strong> 
+                        {% set issue_date = pass_app.approved_date if pass_app.approved_date else now() %}
+                        {% set duration = pass_app.duration %}
+                        {% if '1 Month' in duration %}
+                            {% set expiry = issue_date.replace(month=issue_date.month+1) if issue_date.month<12 else issue_date.replace(year=issue_date.year+1, month=1) %}
+                        {% elif '3 Months' in duration %}
+                            {% set expiry = issue_date.replace(month=issue_date.month+3) if issue_date.month<=9 else issue_date.replace(year=issue_date.year+1, month=issue_date.month-9) %}
+                        {% elif '6 Months' in duration %}
+                            {% set expiry = issue_date.replace(month=issue_date.month+6) if issue_date.month<=6 else issue_date.replace(year=issue_date.year+1, month=issue_date.month-6) %}
+                        {% else %}
+                            {% set expiry = issue_date %}
+                        {% endif %}
+                        {{ issue_date.strftime('%d/%m/%Y') if issue_date else 'N/A' }} - {{ expiry.strftime('%d/%m/%Y') if expiry else 'N/A' }}
+                    </div>
+                   
+
+                   
+                          <div class="stamp">
+                        <span>✧ APPROVAL ✧</span><br>
+                        <small>College Authority</small>
+                    </div>
+                    <div class="stamp1">
+                         <img src="{{ url_for('static', filename='images/clg_stamp.png') }}" 
+                            alt="MSRTC Logo" 
+                            style="height: 150px; width: 150px;">
+                    </div>
+                </div>
+                
+                <!-- Small note -->
+                <div class="mt-3 text-end text-muted" style="font-size: 0.7rem;">
+                    <i class="fas fa-print"></i> Electronically generated, no signature required.
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button onclick="downloadPDF()" class="btn btn-pdf">
+                <i class="fas fa-file-pdf me-2"></i> Download Pass as PDF
+            </button>
+            <a href="/dashboard" class="btn btn-dashboard">
+                <i class="fas fa-arrow-left me-2"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Generate QR Code with the unique pass ID
+        window.onload = function() {
+            var qr = qrcode(0, 'H'); // Type number, error correction level
+            var passID = "{{ pass_app.unique_pass_id }}";
+            // Create verification URL (you can replace with actual domain)
+            var verificationData = "https://buspasssystem.com/verify?pass=" + passID;
+            qr.addData(verificationData);
+            qr.make();
+            
+            var qrDiv = document.getElementById('qrCode');
+            qrDiv.innerHTML = qr.createImgTag(5, 10); // cell size, margin
+            // Make the image responsive
+            var img = qrDiv.querySelector('img');
+            if(img) {
+                img.style.width = '100%';
+                img.style.height = '100%';
+            }
+        };
+
+        // PDF Generation
+        function downloadPDF() {
+            const element = document.getElementById('passContainer');
+            
+            // Increase scale for better quality
+            html2canvas(element, {
+                scale: 2,
+                backgroundColor: '#ffffff',
+                allowTaint: true,
+                useCORS: true,
+                logging: false
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const { jsPDF } = window.jspdf;
+                
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4' 
+                });
+                
+                // Calculate dimensions to fit nicely
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const canvasWidth = canvas.width;
+                const canvasHeight = canvas.height;
+                
+                // Calculate ratio to fit within margins (10mm each side)
+                const ratio = Math.min((pdfWidth - 20) / canvasWidth, (pdfHeight - 20) / canvasHeight);
+                
+                const imgWidth = canvasWidth * ratio;
+                const imgHeight = canvasHeight * ratio;
+                
+                // Center on page
+                const x = (pdfWidth - imgWidth) / 2;
+                const y = (pdfHeight - imgHeight) / 2;
+                
+                pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+                pdf.save('BusPass_{{ pass_app.unique_pass_id }}.pdf');
+            }).catch(error => {
+                console.error('Error generating PDF:', error);
+                alert('Failed to generate PDF. Please try again.');
+            });
+        }
+    </script>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

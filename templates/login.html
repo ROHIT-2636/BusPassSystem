@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .hero-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-top: 20px;
+        }
+        .btn-custom {
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            margin: 10px;
+        }
+        
+        /* Navbar Styles */
+        .msrtc-navbar {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .msrtc-logo {
+            height: 50px;
+            margin-right: 1px;
+        }
+        .msrtc-title {
+            font-family: 'Tiro Devanagari Marathi',cursive;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            font-size: 28px;
+            font-weight: 800;
+            text-align: center;
+            color: #ff7b00; 
+            letter-spacing: 1.6px;
+            margin-top: 1px; 
+        }
+        .studentlogo{
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+             font-size: 58px;
+            background: -webkit-linear-gradient(white,#125b83,rgb(150, 198, 225));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+                        
+        }
+
+        .nav-brand-text {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-brand-text small {
+            font-size: 0.8rem;
+            display: block;
+            font-weight: normal;
+            letter-spacing: 0.5px;
+        }
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 1px 5px;
+            transition: all 0.3s;
+        }
+        .nav-link:hover {
+            color: #fb9302 !important;
+            transform: translateY(-2px);
+        }
+        .admin-btn-nav {
+            background: #9d7334;
+            border-bottom-left-radius: 25px;
+            border-top-right-radius: 25px;
+            padding: 2px 8px;
+            font-weight: bold;
+            transition: all 0.3s;
+            color: #283593;
+            width: 50px;
+            height:30px;
+             
+        }
+        .admin-btn-nav:hover {
+            background: #f57c00;
+            transform: scale(1.05);
+            height: 30px;
+            width: 120px;
+        }
+        
+    
+        
+        
+        .login-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 650px;
+            margin-top:90px
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo h2 {
+            color: #2575fc;
+            font-weight: bold;
+        }
+        .back {
+            text-decoration: none;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 5px;
+            background-color: rgb(89, 226, 190);
+        }
+        .back:hover{
+            background-color: rgb(243, 184, 7);
+            transition: all 0.3s;
+        }
+        .back a{
+            color: rgb(49, 100, 138);
+            text-decoration: none;
+            font-weight: 500;
+            
+        }
+        .back a:hover{
+            color: rgb(7, 87, 130);
+             
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg msrtc-navbar">
+        <div class="container">
+            <!-- Logo and Brand -->
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <!-- Logo Image - You can replace with actual MSRTC logo -->
+                <div class="msrtc-logo-placeholder">
+                   <img src="{{ url_for('static', filename='images/Logo.png') }}" 
+                        alt="MSRTC Logo" 
+                        style="height: 80px; margin-right: 25px;">
+                </div>
+                <div class="nav-brand-text">
+                    
+                    Maharashtra State Road Transport Corporation
+                    <small>Student Bus Pass Portal</small>
+                </div>
+            </a>
+            
+            <!-- Mobile Toggle Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon">
+                    <i class="fas fa-bars text-white"></i>
+                </span>
+            </button>
+            
+            <!-- Navigation Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home me-1"></i> Home
+                        </a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-info-circle me-1"></i> Guidelines
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-phone-alt me-1"></i> Contact
+                        </a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a href="/admin/login" class="btn admin-btn-nav">
+                            <i class="fas fa-user-shield me-1"></i> Admin 
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="login-card mx-auto">
+                    <div class="logo">
+                        <h2>🚌 Student Login</h2>
+                        <p class="text-muted">Access your bus pass account</p>
+                    </div>
+                    
+                    {% if error %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
+                    
+                    <form method="POST" action="/login">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" 
+                                   placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" 
+                                   placeholder="Enter your password" required>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember">
+                            <label class="form-check-label" for="remember">Remember me</label>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                        </div>
+                    </form>
+                    
+                    <div class="mt-3 text-center">
+                        <p>New student? <a href="/signup">Create an account</a></p>
+                        <p><button class="back"><a href="/">← Back to Home</a></button></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+Step 1: MySQL Database Server Start Karein
+
+Option A: MySQL Workbench se
+MySQL Workbench open karein
+
+Left panel mein Local Instance MySQL pe double click karein
+
+Password enter karein
+
+Agar connection successful hai to MySQL chal raha hai
+
+Option B: Command Prompt se
+cmd
+# Command Prompt open karein
+net start mysql80
+# Ya
+net start mysql
+Option C: Services se
+Windows + R press karein
+
+Type services.msc and press Enter
+
+List mein MySQL dhundhe
+
+Right click → Start
+
+Step 2: Flask Application Start Karein
+Command Prompt/VS Code Terminal mein:
+bash
+# 1. Project folder mein jayein
+cd D:\bus_pass_system
+
+# 2. Virtual environment activate karein (agar banaya hai)
+venv\Scripts\activate
+
+# 3. Flask app run karein
+python app.py
+Expected output:
+
+text
+ * Serving Flask app 'app'
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000
+Step 3: Browser Open Karein
+Browser mein jaayein: http://localhost:5000
+
+Quick Checklist:
+✅ 1. MySQL running hai (check with MySQL Workbench)
+✅ 2. Terminal mein python app.py run ho raha hai
+✅ 3. Browser mein localhost:5000 open ho raha hai
+
+Agar Koi Issue Aaye To:
+Issue 1: MySQL start nahi ho raha
+cmd
+# Alternative: XAMPP use karein
+# 1. XAMPP Control Panel open karein
+# 2. MySQL ka "Start" button click karein
+Issue 2: Python module missing
+bash
+# Requirements install karein
+pip install -r requirements.txt
+Issue 3: Port already in use
+bash
+# Different port use karein
+python app.py --port=5001
+# Fir browser mein: http://localhost:5001
+Quick Start Script (Save as start.bat):
+Create a file named start.bat in your project folder:
+
+batch
+@echo off
+echo Starting Bus Pass System...
+echo.
+
+echo 1. Starting MySQL Server...
+net start mysql80
+
+echo.
+echo 2. Activating Python Environment...
+call venv\Scripts\activate
+
+echo.
+echo 3. Installing dependencies if needed...
+pip install -r requirements.txt
+
+echo.
+echo 4. Starting Flask Application...
+python app.py
+
+pause
+Use karne ka tarika:
+
+start.bat file banayein
+
+Double click karein
+
+Sab automatically start ho jayega
+
+Emergency Plan (Agar MySQL start na ho):
+Temporary Solution - Without Database:
+app.py mein jaake line 23-29 comment karein:
+
+python
+# Temporary comment database connection
+# db_config = {
+#     'host': 'localhost',
+#     'user': 'root',
+#     'password': '', 
+#     'database': 'bus_pass_system',
+#     'cursorclass': pymysql.cursors.DictCursor
+# }
+Dummy data se test karein
+
+Final Steps Every Time:
+MySQL ON → Check with Workbench
+
+Terminal open → Project folder mein
+
+Run command → python app.py
+
+Browser open → http://localhost:5000

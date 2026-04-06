@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+ /* Navbar Styles */
+        .msrtc-navbar {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .msrtc-logo {
+            height: 50px;
+            margin-right: 1px;
+        }
+        .msrtc-title {
+            font-family: 'Tiro Devanagari Marathi',cursive;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            font-size: 28px;
+            font-weight: 800;
+            text-align: center;
+            color: #ff7b00; 
+            letter-spacing: 1.6px;
+            margin-top: 1px; 
+        }
+        .studentlogo{
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+             font-size: 58px;
+            background: -webkit-linear-gradient(white,#125b83,rgb(150, 198, 225));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+                        
+        }
+
+        .nav-brand-text {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-brand-text small {
+            font-size: 0.8rem;
+            display: block;
+            font-weight: normal;
+            letter-spacing: 0.5px;
+        }
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 1px 5px;
+            transition: all 0.3s;
+        }
+        .nav-link:hover {
+            color: #fb9302 !important;
+            transform: translateY(-2px);
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+        .card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .nav-item {
+            color: white;
+            font-weight: 600;
+            opacity: 100%;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/"></a>
+                <!-- Logo Image - You can replace with actual MSRTC logo -->
+                <div class="msrtc-logo-placeholder">
+                   <img src="{{ url_for('static', filename='images/Logo.png') }}" 
+                        alt="MSRTC Logo" 
+                        style="height: 80px; margin-right: 25px;">
+                </div>
+                <div class="nav-brand-text">
+                    
+                    Maharashtra State Road Transport Corporation
+                    <small>Student Bus Pass Portal</small>
+                </div>
+            
+           
+            <div class="navbar-nav ms-auto">
+                <span class="nav-item nav-link">
+                    <i class="fas fa-user-circle"></i> Welcome,&nbsp; {{ student.name }} !
+                </span>
+                <a class="nav-item nav-link" href="/logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Student Profile -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="fas fa-user-graduate me-2"></i>Student Profile</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                 style="width: 80px; height: 80px;">
+                                {% if student.student_photo_file %}
+                                    <img src="/static/uploads/{{ student.student_photo_file }}" alt="Profile Photo" class="rounded-circle" style="width: 100%; height: 100%; object-fit: cover;">
+                                {% else %}
+                                    <span style="font-size: 2.5rem; color: white;">{{ student.name[:1]|upper }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <table class="table table-sm">
+                            <tr>
+                                <th>Name:</th>
+                                <td>{{ student.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Register No:</th>
+                                <td><span class="badge bg-secondary">{{ student.register_no }}</span></td>
+                            </tr>
+                                <tr>
+                                    <th>Date of Birth:</th>
+                                    <td>{{ student.dob.strftime('%d-%m-%Y') if student.dob else 'N/A' }}</td>
+                                </tr>
+                            <tr>
+                                <th>College:</th>
+                                <td>{{ student.college }}</td>
+                            </tr>
+                            <tr>
+                                <th>Course:</th>
+                                <td>{{ student.course }} ({{ student.year }})</td>
+                            </tr>
+                            <tr>
+                                <th>Email:</th>
+                                <td>{{ student.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Phone:</th>
+                                <td>{{ student.phone }}</td>
+                            </tr>
+                        </table>
+                        <a href="/edit_profile" class="btn btn-sm btn-warning w-100">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card mt-3">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <a href="/apply" class="btn btn-success w-100 mb-2">
+                            <i class="fas fa-plus-circle"></i> Apply for New Pass
+                        </a>
+                        
+                        {% set has_approved_pass = false %}
+                        {% for pass in passes %}
+                            {% if pass.application_status == 'approved' and pass.payment_status == 'paid' %}
+                                {% set has_approved_pass = true %}
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if has_approved_pass %}
+                            {% for pass in passes %}
+                                {% if pass.application_status == 'approved' and pass.payment_status == 'paid' %}
+                                    <a href="/check_status/{{ pass.id }}" class="btn btn-primary w-100 mb-2">
+                                        <i class="fas fa-download"></i> Download Active Pass
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <button class="btn btn-secondary w-100 mb-2" disabled>
+                                <i class="fas fa-clock"></i> No Active Pass
+                            </button>
+                        {% endif %}
+                        
+                        <small class="text-muted d-block text-center">
+                            <i class="fas fa-info-circle"></i> 
+                            {% if has_approved_pass %}
+                                Your pass is ready to download
+                            {% else %}
+                                Apply for new pass to get bus facility
+                            {% endif %}
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pass History -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="fas fa-history me-2"></i>Pass History</h5>
+                        <span class="badge bg-light text-dark">Total Applications: {{ passes|length }}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Pass ID</th>
+                                        <th>Route</th>
+                                        <th>Type</th>
+                                        <th>Fees</th>
+                                        <th>Payment</th>
+                                        <th>Status</th>
+                                        <th>Applied Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for pass in passes %}
+                                    <tr>
+                                        <td><strong>{{ pass.unique_pass_id }}</strong></td>
+                                        <td>{{ pass.travel_from }} → {{ pass.travel_to }}</td>
+                                        <td>{{ pass.pass_type }} ({{ pass.duration }})</td>
+                                        <td>₹{{ pass.fees }}</td>
+                                        
+                                        <!-- PAYMENT STATUS - Bill dikhega vahi jo logical hai -->
+                                        <td>
+                                            {% if pass.application_status == 'approved' and pass.payment_status == 'paid' %}
+                                                <!-- Approved + Paid → Paid -->
+                                                <span class="badge bg-success">Paid</span>
+                                            
+                                            {% elif pass.application_status == 'approved' and pass.payment_status != 'paid' %}
+                                                <!-- Agar approved hai but paid nahi (edge case) -->
+                                                <span class="badge bg-warning">Pending</span>
+                                            
+                                            {% elif pass.application_status == 'rejected' %}
+                                                <!-- Rejected hua to payment refund → Refunded -->
+                                                <span class="badge bg-secondary">Refunded</span>
+                                            
+                                            {% elif pass.application_status == 'pending' and pass.payment_status == 'paid' %}
+                                                <!-- Pending + Paid → Paid (admin approve karega) -->
+                                                <span class="badge bg-success">Paid</span>
+                                            
+                                            {% elif pass.application_status == 'pending' and pass.payment_status == 'pending' %}
+                                                <!-- Pending + Unpaid → Pending -->
+                                                <span class="badge bg-warning">Pending</span>
+                                            
+                                            {% else %}
+                                                <!-- Fallback -->
+                                                <span class="badge bg-secondary">{{ pass.payment_status|title }}</span>
+                                            {% endif %}
+                                        </td>
+                                        
+                                        <!-- APPLICATION STATUS -->
+                                        <td>
+                                            {% if pass.application_status == 'approved' %}
+                                                <span class="badge bg-success">Approved</span>
+                                            {% elif pass.application_status == 'rejected' %}
+                                                <span class="badge bg-danger">Rejected</span>
+                                            {% else %}
+                                                <span class="badge bg-warning">Pending</span>
+                                            {% endif %}
+                                        </td>
+                                        
+                                        <td>{{ pass.applied_date.strftime('%d-%m-%Y') }}</td>
+                                        
+                                        <!-- ACTION BUTTONS -->
+                                        <td>
+                                            {% if pass.application_status == 'approved' and pass.payment_status == 'paid' %}
+                                                <!-- Approved + Paid → Download Pass -->
+                                                <a href="/check_status/{{ pass.id }}" class="btn btn-sm btn-success">
+                                                    <i class="fas fa-download"></i> Download
+                                                </a>
+                                            
+                                            {% elif pass.application_status == 'pending' and pass.payment_status == 'paid' %}
+                                                <!-- Pending + Paid → Under Review (No action) -->
+                                                <span class="badge bg-info">Under Review</span>
+                                            
+                                            {% elif pass.application_status == 'pending' and pass.payment_status == 'pending' %}
+                                                <!-- Pending + Unpaid → Pay Now -->
+                                                <a href="/payment/{{ pass.id }}" class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-credit-card"></i> Pay Now
+                                                </a>
+                                            
+                                            {% elif pass.application_status == 'rejected' %}
+                                                <!-- Rejected → No action -->
+                                                <span class="badge bg-danger">Rejected</span>
+                                            
+                                            {% else %}
+                                                <span class="badge bg-secondary">N/A</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        {% if passes|length == 0 %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-ticket-alt fa-4x text-muted mb-3"></i>
+                            <h5>No Applications Yet</h5>
+                            <p class="text-muted">You haven't applied for any bus pass yet.</p>
+                            <a href="/apply" class="btn btn-primary">
+                                <i class="fas fa-plus-circle"></i> Apply Now
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

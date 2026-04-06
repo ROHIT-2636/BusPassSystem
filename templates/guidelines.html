@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guidelines & Restrictions - Bus Pass System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-top: 80px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .guidelines-container {
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+        .guidelines-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+        .lang-toggle {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .lang-btn {
+            border: 2px solid #4e73df;
+            background: white;
+            color: #4e73df;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-btn.active {
+            background: #4e73df;
+            color: white;
+        }
+        .section-title {
+            color: #1a237e;
+            border-left: 5px solid #f39c12;
+            padding-left: 15px;
+            margin: 30px 0 20px;
+            font-weight: 700;
+        }
+        .rule-item {
+            background: #f8f9fc;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4e73df;
+        }
+        .rule-item.warning {
+            border-left-color: #e74a3b;
+            background: #fff5f5;
+        }
+        .legal-warning {
+            background: #dc3545;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+        .back-btn {
+            background: #1a237e;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .language-content {
+            display: none;
+        }
+        .language-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #1a237e 0%, #283593 100%); position: fixed; top: 0; width: 100%; z-index: 1000;">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="MSRTC Logo" style="height: 60px; margin-right: 15px;">
+                <div>
+                    <span style="color: white; font-size: 1.2rem; font-weight: bold;">MSRTC</span><br>
+                    <small style="color: #ffd700;">Student Bus Pass Portal</small>
+                </div>
+            </a>
+            <a href="/" class="btn btn-outline-light">
+                <i class="fas fa-home"></i> Home
+            </a>
+          
+                       
+                   
+        </div>
+    </nav>
+
+    <div class="container guidelines-container">
+        <div class="guidelines-card">
+            <!-- Language Buttons -->
+            <div class="lang-toggle">
+                <button class="lang-btn active" onclick="switchLanguage('en')"> English</button>
+                <button class="lang-btn" onclick="switchLanguage('mr')"> मराठी</button>
+                <button class="lang-btn" onclick="switchLanguage('hi')"> हिंदी</button>
+            </div>
+
+            <!-- ENGLISH CONTENT (Default) -->
+           <!-- ENGLISH CONTENT (Default) -->
+<div id="content-en" class="language-content active">
+    <h1 class="text-center" style="color: #1a237e; font-weight: 700;">
+        <i class="fas fa-book-open me-2"></i>Student Bus Pass Guidelines
+    </h1>
+    <p class="text-center text-muted mb-4">
+        <i class="fas fa-info-circle me-1"></i>Please read carefully before applying. 
+        <span class="badge bg-danger">⚠️ Violation may lead to legal action</span>
+    </p>
+
+    <!-- MSRTC Header -->
+    <div class="d-flex align-items-center justify-content-center mb-4">
+        <img src="{{ url_for('static', filename='images/Logo.png') }}" style="height: 50px;" class="me-3">
+        <h4 class="text-primary mb-0">Maharashtra State Road Transport Corporation</h4>
+    </div>
+
+    <!-- LEGAL WARNING - HIGHLIGHTED -->
+    <div class="legal-warning">
+        <div class="d-flex align-items-center justify-content-center">
+            <i class="fas fa-gavel fa-3x me-3"></i>
+            <div class="text-start">
+                <h5 class="mb-1"><i class="fas fa-exclamation-triangle"></i> STRICT LEGAL WARNING</h5>
+                <p class="mb-0">Any misconduct or violation of rules will result in strict legal action as per Maharashtra State Transport Authority guidelines. FIR may be lodged for serious offenses.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 1: GENERAL RULES (4 ITEMS) -->
+    <h3 class="section-title">
+        <i class="fas fa-clipboard-check me-2" style="color: #28a745;"></i>📋 General Rules
+    </h3>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="rule-item success">
+                <i class="fas fa-check-circle text-success fa-lg me-3"></i>
+                <div>
+                    <strong>Pass Validity:</strong> Pass is valid only for the mentioned <span class="fw-bold">route and duration</span>.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="rule-item success">
+                <i class="fas fa-id-card text-success fa-lg me-3"></i>
+                <div>
+                    <strong>Display Pass:</strong> Students must show valid bus pass to <span class="fw-bold">conductor/conductor</span> at all times.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="rule-item warning">
+                <i class="fas fa-ban text-danger fa-lg me-3"></i>
+                <div>
+                    <strong>Non-Transferable:</strong> Pass is <span class="fw-bold">non-transferable</span>. Using someone else's pass is a punishable offense.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="rule-item">
+                <i class="fas fa-clock text-info fa-lg me-3"></i>
+                <div>
+                    <strong>Timings:</strong> Pass valid for <span class="fw-bold">6:00 AM to 11:00 PM</span> only.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: BUS RESTRICTIONS (6 ITEMS) -->
+    <h3 class="section-title">
+        <i class="fas fa-ban me-2" style="color: #dc3545;"></i>🚫 Bus Restrictions
+    </h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-volume-up fa-2x text-warning mb-2"></i>
+                <h6 class="fw-bold">🔊 NO LOUD MUSIC</h6>
+                <small>Without headphones - Strictly prohibited</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-utensils fa-2x text-warning mb-2"></i>
+                <h6 class="fw-bold">🍔 NO EATING/DRINKING</h6>
+                <small>Food & beverages not allowed inside bus</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-smoking-ban fa-2x text-danger mb-2"></i>
+                <h6 class="fw-bold">🚭 NO SMOKING/TOBACCO</h6>
+                <small>₹500 fine + legal case</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-spray-can fa-2x text-warning mb-2"></i>
+                <h6 class="fw-bold">🧴 NO STRONG PERFUMES</h6>
+                <small>Deodorants/sprays not allowed</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-dog fa-2x text-warning mb-2"></i>
+                <h6 class="fw-bold">🐕 NO PETS</h6>
+                <small>Animals/pets not allowed inside bus</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-paint-brush fa-2x text-danger mb-2"></i>
+                <h6 class="fw-bold">🎨 NO GRAFFITI</h6>
+                <small>Writing on seats - ₹1000 fine</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: STUDENT CONDUCT (3 ITEMS) -->
+    <h3 class="section-title">
+        <i class="fas fa-user-graduate me-2" style="color: #17a2b8;"></i>👨‍🎓 Student Conduct
+    </h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="rule-item text-center p-3">
+                <i class="fas fa-chair fa-2x text-primary mb-2"></i>
+                <h6 class="fw-bold">SEAT ETIQUETTE</h6>
+                <small>Offer seats to elderly/disabled</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item text-center p-3">
+                <i class="fas fa-comment-slash fa-2x text-primary mb-2"></i>
+                <h6 class="fw-bold">NO FIGHTING/ABUSE</h6>
+                <small>Pass cancellation + police complaint</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item text-center p-3">
+                <i class="fas fa-people-arrows fa-2x text-primary mb-2"></i>
+                <h6 class="fw-bold">MAINTAIN DISCIPLINE</h6>
+                <small>Follow conductor's instructions</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 4: LEGAL CONSEQUENCES (3 STRIKES) -->
+    <h3 class="section-title">
+        <i class="fas fa-gavel me-2" style="color: #dc3545;"></i>⚖️ Legal Consequences
+    </h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card border-warning">
+                <div class="card-header bg-warning text-dark fw-bold">
+                    <i class="fas fa-exclamation-circle"></i> FIRST OFFENSE
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">📝 Written warning<br>👪 Parents informed</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white fw-bold">
+                    <i class="fas fa-exclamation-triangle"></i> SECOND OFFENSE
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">💰 Fine up to ₹1000<br>⛔ Pass suspension 1 month</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-dark">
+                <div class="card-header bg-dark text-white fw-bold">
+                    <i class="fas fa-gavel"></i> THIRD OFFENSE
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">❌ Pass cancelled<br>👮 FIR under Police Act</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+            <!-- MARATHI CONTENT (Initially Hidden) -->
+           
+            <!-- MARATHI CONTENT - Complete Translation -->
+<div id="content-mr" class="language-content">
+    <h1 class="text-center" style="color: #1a237e; font-weight: 700;">
+        <i class="fas fa-book-open me-2"></i>विद्यार्थी बस पास मार्गदर्शक तत्त्वे व निर्बंध
+    </h1>
+    <p class="text-center text-muted mb-4">
+        <i class="fas fa-info-circle me-1"></i>कृपया अर्ज करण्यापूर्वी काळजीपूर्वक वाचा. 
+        <span class="badge bg-danger">⚠️ उल्लंघन केल्यास कायदेशीर कारवाई होऊ शकते</span>
+    </p>
+
+    <!-- MSRTC Header -->
+    <div class="d-flex align-items-center justify-content-center mb-4">
+        <img src="{{ url_for('static', filename='images/Logo.png') }}" style="height: 50px;" class="me-3">
+        <h4 class="text-primary mb-0">महाराष्ट्र राज्य मार्ग परिवहन महामंडळ</h4>
+    </div>
+
+    <!-- LEGAL WARNING - HIGHLIGHTED -->
+    <div class="legal-warning">
+        <div class="d-flex align-items-center justify-content-center">
+            <i class="fas fa-gavel fa-3x me-3"></i>
+            <div class="text-start">
+                <h5 class="mb-1"><i class="fas fa-exclamation-triangle"></i> कडक कायदेशीर इशारा</h5>
+                <p class="mb-0">कोणत्याही गैरवर्तनास किंवा नियमांचे उल्लंघन केल्यास महाराष्ट्र राज्य परिवहन प्राधिकरणाच्या मार्गदर्शक तत्त्वांनुसार कठोर कायदेशीर कारवाई केली जाईल. गंभीर गुन्ह्यांसाठी एफआयआर दाखल केला जाऊ शकतो.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 1: GENERAL RULES (4 ITEMS) -->
+    <h3 class="section-title">
+        <i class="fas fa-clipboard-check me-2" style="color: #28a745;"></i>📋 सामान्य नियम
+    </h3>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="rule-item success">
+                <i class="fas fa-check-circle text-success fa-lg me-3"></i>
+                <div>
+                    <strong>पास वैधता:</strong> पास फक्त नमूद केलेल्या <span class="fw-bold">मार्ग आणि कालावधीसाठी</span> वैध आहे.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="rule-item success">
+                <i class="fas fa-id-card text-success fa-lg me-3"></i>
+                <div>
+                    <strong>पास दाखवा:</strong> विद्यार्थ्यांनी वाहकास/कंडक्टरला नेहमी <span class="fw-bold">वैध बस पास दाखवावा</span>.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="rule-item warning">
+                <i class="fas fa-ban text-danger fa-lg me-3"></i>
+                <div>
+                    <strong>हस्तांतरण निषिद्ध:</strong> पास हा <span class="fw-bold">बदलता येण्याजोगा नाही</span>. दुसऱ्याचा पास वापरणे हा शिक्षेचा गुन्हा आहे.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="rule-item">
+                <i class="fas fa-clock text-info fa-lg me-3"></i>
+                <div>
+                    <strong>वेळ:</strong> पास फक्त <span class="fw-bold">सकाळी ६:०० ते रात्री ११:००</span> या वेळेत वैध आहे.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: BUS RESTRICTIONS (6 ITEMS) -->
+    <h3 class="section-title">
+        <i class="fas fa-ban me-2" style="color: #dc3545;"></i>🚫 बस निर्बंध
+    </h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-volume-up fa-2x text-warning mb-2"></i>
+                <h6 class="fw-bold">🔊 मोठ्याने संगीत नाही</h6>
+                <small>हेडफोनशिवाय संगीत वाजवण्यास सक्त मनाई आहे</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-utensils fa-2x text-warning mb-2"></i>
+                <h6 class="fw-bold">🍔 खाणे/पिणे नाही</h6>
+                <small>बसमध्ये अन्न आणि पेये खाण्यास परवानगी नाही</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-smoking-ban fa-2x text-danger mb-2"></i>
+                <h6 class="fw-bold">🚭 धूम्रपान/तंबाखू सक्त मनाई</h6>
+                <small>₹५०० दंड + कायदेशीर कारवाई</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-spray-can fa-2x text-warning mb-2"></i>
+                <h6 class="fw-bold">🧴 उग्र अत्तर/स्प्रे नाहीत</h6>
+                <small>मजबूत अत्तर, डिओडरंट किंवा स्प्रेसना परवानगी नाही (अ‍ॅलर्जी असलेले प्रवासी)</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-dog fa-2x text-warning mb-2"></i>
+                <h6 class="fw-bold">🐕 पाळीव प्राणी नाहीत</h6>
+                <small>बसमध्ये प्राणी/पाळीव प्राण्यांना परवानगी नाही</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-paint-brush fa-2x text-danger mb-2"></i>
+                <h6 class="fw-bold">🎨 लेखन/चित्रकला नाही</h6>
+                <small>आसनांवर किंवा भिंतींवर लिहिणे/चित्र काढणे सक्त मनाई आहे. दंड: ₹१०००</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: STUDENT CONDUCT (3 ITEMS) -->
+    <h3 class="section-title">
+        <i class="fas fa-user-graduate me-2" style="color: #17a2b8;"></i>👨‍🎓 विद्यार्थी आचरण
+    </h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="rule-item text-center p-3">
+                <i class="fas fa-chair fa-2x text-primary mb-2"></i>
+                <h6 class="fw-bold">सीट शिष्टाचार</h6>
+                <small>वृद्ध/अपंग प्रवाशांना जागा द्या. महिला/ज्येष्ठ नागरिकांसाठी राखीव जागा व्यापू नका.</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item text-center p-3">
+                <i class="fas fa-comment-slash fa-2x text-primary mb-2"></i>
+                <h6 class="fw-bold">भांडण/गैरवर्तन नाही</h6>
+                <small>वाहक किंवा सहप्रवाशांशी शाब्दिक/शारीरिक गैरवर्तन केल्यास पास त्वरित रद्द आणि पोलिस तक्रार</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item text-center p-3">
+                <i class="fas fa-people-arrows fa-2x text-primary mb-2"></i>
+                <h6 class="fw-bold">शिस्त पाळा</h6>
+                <small>वाहकाच्या सूचनांचे पालन करा</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 4: LEGAL CONSEQUENCES (3 STRIKES) -->
+    <h3 class="section-title">
+        <i class="fas fa-gavel me-2" style="color: #dc3545;"></i>⚖️ कायदेशीर परिणाम
+    </h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card border-warning h-100">
+                <div class="card-header bg-warning text-dark fw-bold">
+                    <i class="fas fa-exclamation-circle"></i> पहिला गुन्हा
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">📝 लेखी इशारा<br>👪 पालकांना कळवले जाईल</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-danger h-100">
+                <div class="card-header bg-danger text-white fw-bold">
+                    <i class="fas fa-exclamation-triangle"></i> दुसरा गुन्हा
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">💰 ₹१००० पर्यंत दंड<br>⛔ १ महिना पास निलंबन</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-dark h-100">
+                <div class="card-header bg-dark text-white fw-bold">
+                    <i class="fas fa-gavel"></i> तिसरा गुन्हा
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">❌ पास रद्द<br>👮 महाराष्ट्र पोलिस कायदा, १९५१ अंतर्गत एफआयआर</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+
+            <!-- HINDI CONTENT (Initially Hidden) -->
+            <!-- HINDI CONTENT - Complete Translation -->
+<div id="content-hi" class="language-content">
+    <h1 class="text-center" style="color: #1a237e; font-weight: 700;">
+        <i class="fas fa-book-open me-2"></i>छात्र बस पास दिशानिर्देश एवं प्रतिबंध
+    </h1>
+    <p class="text-center text-muted mb-4">
+        <i class="fas fa-info-circle me-1"></i>कृपया आवेदन करने से पहले ध्यानपूर्वक पढ़ें। 
+        <span class="badge bg-danger">⚠️ उल्लंघन पर कानूनी कार्रवाई हो सकती है</span>
+    </p>
+
+    <!-- MSRTC Header -->
+    <div class="d-flex align-items-center justify-content-center mb-4">
+        <img src="{{ url_for('static', filename='images/Logo.png') }}" style="height: 50px;" class="me-3">
+        <h4 class="text-primary mb-0">महाराष्ट्र राज्य सड़क परिवहन निगम</h4>
+    </div>
+
+    <!-- LEGAL WARNING - HIGHLIGHTED -->
+    <div class="legal-warning">
+        <div class="d-flex align-items-center justify-content-center">
+            <i class="fas fa-gavel fa-3x me-3"></i>
+            <div class="text-start">
+                <h5 class="mb-1"><i class="fas fa-exclamation-triangle"></i> कड़ी कानूनी चेतावनी</h5>
+                <p class="mb-0">किसी भी दुर्व्यवहार या नियमों के उल्लंघन पर महाराष्ट्र राज्य परिवहन प्राधिकरण के दिशानिर्देशों के अनुसार कठोर कानूनी कार्रवाई की जाएगी। गंभीर अपराधों के लिए एफआईआर दर्ज की जा सकती है।</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 1: GENERAL RULES (4 ITEMS) -->
+    <h3 class="section-title">
+        <i class="fas fa-clipboard-check me-2" style="color: #28a745;"></i>📌 सामान्य नियम
+    </h3>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="rule-item success">
+                <i class="fas fa-check-circle text-success fa-lg me-3"></i>
+                <div>
+                    <strong>पास वैधता:</strong> पास केवल निर्दिष्ट <span class="fw-bold">मार्ग और अवधि</span> के लिए वैध है।
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="rule-item success">
+                <i class="fas fa-id-card text-success fa-lg me-3"></i>
+                <div>
+                    <strong>पास दिखाएं:</strong> छात्रों को कंडक्टर को हमेशा <span class="fw-bold">वैध बस पास दिखाना</span> होगा।
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="rule-item warning">
+                <i class="fas fa-ban text-danger fa-lg me-3"></i>
+                <div>
+                    <strong>हस्तांतरण प्रतिबंधित:</strong> पास <span class="fw-bold">हस्तांतरणीय नहीं है</span>। किसी और का पास उपयोग करना दंडनीय अपराध है।
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="rule-item">
+                <i class="fas fa-clock text-info fa-lg me-3"></i>
+                <div>
+                    <strong>समय:</strong> पास केवल <span class="fw-bold">सुबह ६:०० बजे से रात ११:०० बजे तक</span> वैध है।
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: BUS RESTRICTIONS (6 ITEMS) -->
+    <h3 class="section-title">
+        <i class="fas fa-ban me-2" style="color: #dc3545;"></i>🚫 बस प्रतिबंध
+    </h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-volume-up fa-2x text-warning mb-2"></i>
+                <h6 class="fw-bold">🔊 तेज संगीत नहीं</h6>
+                <small>हेडफोन के बिना संगीत बजाना सख्त मना है</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-utensils fa-2x text-warning mb-2"></i>
+                <h6 class="fw-bold">🍔 खाना/पीना नहीं</h6>
+                <small>बस में भोजन और पेय पदार्थों की अनुमति नहीं है</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-smoking-ban fa-2x text-danger mb-2"></i>
+                <h6 class="fw-bold">🚭 धूम्रपान/तंबाकू सख्त मना</h6>
+                <small>₹५०० जुर्माना + कानूनी कार्रवाई</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-spray-can fa-2x text-warning mb-2"></i>
+                <h6 class="fw-bold">🧴 तेज इत्र/स्प्रे नहीं</h6>
+                <small>तेज इत्र, डिओडोरेंट या स्प्रे की अनुमति नहीं (एलर्जी वाले यात्री)</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-dog fa-2x text-warning mb-2"></i>
+                <h6 class="fw-bold">🐕 पालतू जानवर नहीं</h6>
+                <small>बस में जानवर/पालतू जानवरों की अनुमति नहीं है</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item warning text-center p-3">
+                <i class="fas fa-paint-brush fa-2x text-danger mb-2"></i>
+                <h6 class="fw-bold">🎨 लेखन/चित्रकारी नहीं</h6>
+                <small>सीटों या दीवारों पर लिखना/चित्र बनाना सख्त मना है। जुर्माना: ₹१०००</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: STUDENT CONDUCT (3 ITEMS) -->
+    <h3 class="section-title">
+        <i class="fas fa-user-graduate me-2" style="color: #17a2b8;"></i>👨‍🎓 छात्र आचरण
+    </h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="rule-item text-center p-3">
+                <i class="fas fa-chair fa-2x text-primary mb-2"></i>
+                <h6 class="fw-bold">सीट शिष्टाचार</h6>
+                <small>बुजुर्ग/विकलांग यात्रियों को सीट दें। महिलाओं/वरिष्ठ नागरिकों के लिए आरक्षित सीटों पर न बैठें।</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item text-center p-3">
+                <i class="fas fa-comment-slash fa-2x text-primary mb-2"></i>
+                <h6 class="fw-bold">झगड़ा/दुर्व्यवहार नहीं</h6>
+                <small>कंडक्टर या साथी यात्रियों के साथ मौखिक/शारीरिक दुर्व्यवहार पर तत्काल पास रद्द और पुलिस शिकायत</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rule-item text-center p-3">
+                <i class="fas fa-people-arrows fa-2x text-primary mb-2"></i>
+                <h6 class="fw-bold">अनुशासन बनाए रखें</h6>
+                <small>कंडक्टर के निर्देशों का पालन करें</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 4: LEGAL CONSEQUENCES (3 STRIKES) -->
+    <h3 class="section-title">
+        <i class="fas fa-gavel me-2" style="color: #dc3545;"></i>⚖️ कानूनी परिणाम
+    </h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card border-warning h-100">
+                <div class="card-header bg-warning text-dark fw-bold">
+                    <i class="fas fa-exclamation-circle"></i> पहला अपराध
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">📝 लिखित चेतावनी<br>👪 माता-पिता को सूचित किया जाएगा</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-danger h-100">
+                <div class="card-header bg-danger text-white fw-bold">
+                    <i class="fas fa-exclamation-triangle"></i> दूसरा अपराध
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">💰 ₹१००० तक जुर्माना<br>⛔ १ महीने के लिए पास निलंबन</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-dark h-100">
+                <div class="card-header bg-dark text-white fw-bold">
+                    <i class="fas fa-gavel"></i> तीसरा अपराध
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">❌ पास रद्द<br>👮 महाराष्ट्र पुलिस अधिनियम, १९५१ के तहत एफआईआर</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+            <!-- Back Button -->
+            <div class="text-center mt-4">
+                <a href="/" class="back-btn">
+                    <i class="fas fa-arrow-left me-2"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchLanguage(lang) {
+            console.log('Switching to:', lang);
+            
+            // Hide all content
+            document.getElementById('content-en').classList.remove('active');
+            document.getElementById('content-mr').classList.remove('active');
+            document.getElementById('content-hi').classList.remove('active');
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Show selected language
+            if (lang === 'en') {
+                document.getElementById('content-en').classList.add('active');
+            } else if (lang === 'mr') {
+                document.getElementById('content-mr').classList.add('active');
+            } else if (lang === 'hi') {
+                document.getElementById('content-hi').classList.add('active');
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Signup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+        .signup-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top:120px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 20px;
+        }
+        .form-header h2 {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+         /* Navbar Styles */
+        .msrtc-navbar {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .msrtc-logo {
+            height: 50px;
+            margin-right: 1px;
+        }
+        .msrtc-title {
+            font-family: 'Tiro Devanagari Marathi',cursive;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            font-size: 28px;
+            font-weight: 800;
+            text-align: center;
+            color: #ff7b00; 
+            letter-spacing: 1.6px;
+            margin-top: 1px; 
+        }
+        .studentlogo{
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+             font-size: 58px;
+            background: -webkit-linear-gradient(white,#125b83,rgb(150, 198, 225));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+                        
+        }
+
+        .nav-brand-text {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-brand-text small {
+            font-size: 0.8rem;
+            display: block;
+            font-weight: normal;
+            letter-spacing: 0.5px;
+        }
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 1px 5px;
+            transition: all 0.3s;
+        }
+        .nav-link:hover {
+            color: #fb9302 !important;
+            transform: translateY(-2px);
+        }
+         .admin-btn-nav {
+            background: #9d7334;
+            border-bottom-left-radius: 25px;
+            border-top-right-radius: 25px;
+            padding: 2px 8px;
+            font-weight: bold;
+            transition: all 0.3s;
+            color: #283593;
+            width: 50px;
+            height:30px;
+             
+        }
+        .admin-btn-nav:hover {
+            background: #f57c00;
+            transform: scale(1.05);
+            height: 30px;
+            width: 120px;
+        }
+        
+       .compliment{
+        opacity:0.5;
+       }
+       
+    </style>
+</head>
+<body>
+     <nav class="navbar navbar-expand-lg msrtc-navbar">
+        <div class="container">
+            <!-- Logo and Brand -->
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <!-- Logo Image - You can replace with actual MSRTC logo -->
+                <div class="msrtc-logo-placeholder">
+                   <img src="{{ url_for('static', filename='images/Logo.png') }}" 
+                        alt="MSRTC Logo" 
+                        style="height: 80px; margin-right: 25px;">
+                </div>
+                <div class="nav-brand-text">
+                    
+                    Maharashtra State Road Transport Corporation
+                    <small>Student Bus Pass Portal</small>
+                </div>
+            </a>
+            
+            <!-- Mobile Toggle Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon">
+                    <i class="fas fa-bars text-white"></i>
+                </span>
+            </button>
+            
+            <!-- Navigation Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home me-1"></i> Home
+                        </a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-info-circle me-1"></i> Guidelines
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-phone-alt me-1"></i> Contact
+                        </a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a href="/admin/login" class="btn admin-btn-nav">
+                            <i class="fas fa-user-shield me-1"></i> Admin 
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="signup-card">
+                    <div class="form-header">
+                        <h2>📝 Student Registration</h2>
+                        <p class="text-muted">Create your bus pass account</p>
+                    </div>
+                    
+                    <form method="POST" action="/signup">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Full Name * &nbsp; <span class="compliment">(As per 10th/12th Marksheet)</span> </label>
+                                <input type="text" class="form-control" name="name" required>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Email Address *</label>
+                                <input type="email" class="form-control" name="email" required>
+                            </div>
+                            <!-- DOB Field -  -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label required">Date of Birth</label>
+                                    <input type="date" class="form-control" name="dob" required 
+                                        max="{{ now().strftime('%Y-%m-%d') }}" 
+                                        value="{{ request.form.dob }}" placeholder="Format: YYYY-MM-DD">
+                                </div>
+                                 
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Register Number * <span class="compliment">(Your College egister no.)</span> </label>
+                                <input type="text" class="form-control" name="register_no" required>
+                            </div>
+                             <div class="col-md-6 mb-3">
+                                <label class="form-label">Password *</label>
+                                <input type="password" class="form-control" name="password" required>
+                            </div>
+
+                                   
+
+                       
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">College Name *</label>
+                                <input type="text" class="form-control" name="college" required>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Course *</label>
+                                <select class="form-select" name="course" required>
+                                    <option value="">Select Course</option>
+                                    <option value="B.Tech">B.Tech</option>
+                                    <option value="MBA">MBA</option>
+                                    <option value="BBA">BBA</option>
+                                    <option value="BCA">BCA</option>
+                                    <option value="B.Sc">B.Sc</option>
+                                    <option value="M.Sc">M.Sc</option>
+                                    <option value="B.Com">B.Com</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Year *</label>
+                                <select class="form-select" name="year" required>
+                                    <option value="">Select Year</option>
+                                    <option value="1st Year">1st Year</option>
+                                    <option value="2nd Year">2nd Year</option>
+                                    <option value="3rd Year">3rd Year</option>
+                                    <option value="4th Year">4th Year</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Phone Number *</label>
+                                <input type="tel" class="form-control" name="phone" required>
+                            </div>
+                             <div class="col-md-6 mb-3">
+                                        <label class="form-label required">Gender</label>
+                                        <select class="form-select" name="gender" required >
+                                            <option value="">Select </option>
+                                            <option >Male</option>
+                                            <option >Female</option>
+                                        </select>
+                                    </div>
+                            
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Address *</label>
+                                <textarea class="form-control" name="address" rows="3" required></textarea>
+                            </div>
+                        </div>
+                        
+                           
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" required>
+                                <label class="form-check-label">
+                                    I agree to the terms and conditions
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">Create Account</button>
+                            <a href="/login" class="btn btn-outline-primary">Already have an account? Login</a>
+                            <a href="/" class="btn btn-secondary">← Back to Home</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

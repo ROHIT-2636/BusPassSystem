@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: #f8f9fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .main-container {
+            padding: 20px;
+        }
+        
+        /* Settings Layout */
+        .settings-wrapper {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .settings-sidebar {
+            width: 280px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            padding: 25px;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+        
+        .settings-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        /* Category Cards */
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .category-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .category-header i {
+            transition: transform 0.3s;
+        }
+        
+        .category-header.collapsed i {
+            transform: rotate(-90deg);
+        }
+        
+        .category-body {
+            padding: 25px;
+        }
+        
+        /* Form Elements */
+        .settings-form .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .settings-form label {
+            font-weight: 600;
+            color: #4e73df;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .settings-form .form-control,
+        .settings-form .form-select {
+            border-radius: 12px;
+            border: 2px solid #e3e6f0;
+            padding: 12px 15px;
+            transition: all 0.2s;
+        }
+        
+        .settings-form .form-control:focus,
+        .settings-form .form-select:focus {
+            border-color: #4e73df;
+            box-shadow: 0 0 0 0.2rem rgba(78,115,223,0.25);
+        }
+        
+        .settings-form .input-group-text {
+            border-radius: 12px 0 0 12px;
+            border: 2px solid #e3e6f0;
+            border-right: none;
+        }
+        
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #1cc88a;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* Sidebar Navigation */
+        .settings-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .settings-nav-item {
+            margin-bottom: 10px;
+        }
+        
+        .settings-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 12px;
+            color: #6c757d;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        
+        .settings-nav-link i {
+            width: 25px;
+            margin-right: 10px;
+            color: #4e73df;
+        }
+        
+        .settings-nav-link:hover {
+            background: #f8f9fc;
+            color: #4e73df;
+        }
+        
+        .settings-nav-link.active {
+            background: #4e73df;
+            color: white;
+        }
+        
+        .settings-nav-link.active i {
+            color: white;
+        }
+        
+        /* Stats Cards */
+        .stats-mini-card {
+            background: #f8f9fc;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4e73df;
+        }
+        
+        /* Save Bar */
+        .save-bar {
+            position: sticky;
+            bottom: 20px;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            padding: 15px 25px;
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            border: 1px solid #e3e6f0;
+        }
+        
+        /* Alert Messages */
+        .alert-messages {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            max-width: 400px;
+        }
+        
+        @media (max-width: 768px) {
+            .settings-wrapper {
+                flex-direction: column;
+            }
+            .settings-sidebar {
+                width: 100%;
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin/dashboard">
+                <i class="fas fa-bus"></i> Bus Pass System - Admin Panel
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/dashboard">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/all_students">
+                            <i class="fas fa-users"></i> Students
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/applications_remains">
+                            <i class="fas fa-clock"></i> Pending
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/settings">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    <div class="alert-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %} me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="main-container">
+        <div class="container-fluid">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="mb-1">
+                        <i class="fas fa-cog text-primary"></i> System Settings
+                    </h2>
+                    <p class="text-muted mb-0">
+                        <i class="fas fa-sliders-h"></i> Configure and customize your bus pass system
+                    </p>
+                </div>
+                <div>
+                    <span class="badge bg-info p-3">
+                        <i class="fas fa-database"></i> System Version 1.0.0
+                    </span>
+                </div>
+            </div>
+
+            <!-- Settings Wrapper -->
+            <div class="settings-wrapper">
+                <!-- Sidebar -->
+                <div class="settings-sidebar">
+                    <h5 class="mb-3">
+                        <i class="fas fa-compass text-primary"></i> Navigation
+                    </h5>
+                    <ul class="settings-nav">
+                        <li class="settings-nav-item">
+                            <a href="#general" class="settings-nav-link active" onclick="scrollToSection('general')">
+                                <i class="fas fa-globe"></i> General Settings
+                            </a>
+                        </li>
+                        <li class="settings-nav-item">
+                            <a href="#fees" class="settings-nav-link" onclick="scrollToSection('fees')">
+                                <i class="fas fa-rupee-sign"></i> Fee Configuration
+                            </a>
+                        </li>
+                        <li class="settings-nav-item">
+                            <a href="#documents" class="settings-nav-link" onclick="scrollToSection('documents')">
+                                <i class="fas fa-file-upload"></i> Document Settings
+                            </a>
+                        </li>
+                        <li class="settings-nav-item">
+                            <a href="#notifications" class="settings-nav-link" onclick="scrollToSection('notifications')">
+                                <i class="fas fa-bell"></i> Notifications
+                            </a>
+                        </li>
+                        <li class="settings-nav-item">
+                            <a href="#application" class="settings-nav-link" onclick="scrollToSection('application')">
+                                <i class="fas fa-file-alt"></i> Application Rules
+                            </a>
+                        </li>
+                        <li class="settings-nav-item">
+                            <a href="#display" class="settings-nav-link" onclick="scrollToSection('display')">
+                                <i class="fas fa-paint-brush"></i> Display & Theme
+                            </a>
+                        </li>
+                        <li class="settings-nav-item">
+                            <a href="#advanced" class="settings-nav-link" onclick="scrollToSection('advanced')">
+                                <i class="fas fa-code"></i> Advanced
+                            </a>
+                        </li>
+                    </ul>
+
+                    <hr class="my-4">
+
+                    <!-- System Stats -->
+                    <h5 class="mb-3">
+                        <i class="fas fa-chart-pie text-primary"></i> System Stats
+                    </h5>
+                    <div class="stats-mini-card">
+                        <div class="d-flex justify-content-between">
+                            <span>Total Students:</span>
+                            <strong>{{ total_students }}</strong>
+                        </div>
+                    </div>
+                    <div class="stats-mini-card">
+                        <div class="d-flex justify-content-between">
+                            <span>Total Applications:</span>
+                            <strong>{{ total_applications }}</strong>
+                        </div>
+                    </div>
+                    <div class="stats-mini-card">
+                        <div class="d-flex justify-content-between">
+                            <span>Pending:</span>
+                            <strong class="text-warning">{{ pending_applications }}</strong>
+                        </div>
+                    </div>
+
+                    <!-- Danger Zone -->
+                    <div class="mt-4 p-3 bg-light rounded">
+                        <h6 class="text-danger">
+                            <i class="fas fa-exclamation-triangle"></i> Danger Zone
+                        </h6>
+                        <form action="/admin/settings/reset" method="POST" onsubmit="return confirm('⚠️ Are you sure you want to reset ALL settings to default values? This action cannot be undone.');">
+                            <button type="submit" class="btn btn-outline-danger btn-sm w-100 mt-2">
+                                <i class="fas fa-undo-alt"></i> Reset to Defaults
+                            </button>
+                        </form>
+                        <form action="/admin/settings/cache/clear" method="POST" class="mt-2">
+                            <button type="submit" class="btn btn-outline-warning btn-sm w-100">
+                                <i class="fas fa-broom"></i> Clear Cache
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Settings Content -->
+                <div class="settings-content">
+                    <form method="POST" action="/admin/settings" class="settings-form">
+                        <!-- General Settings -->
+                        <div class="category-card" id="general">
+                            <div class="category-header" onclick="toggleCategory(this)">
+                                <h5 class="mb-0"><i class="fas fa-globe me-2"></i> General Settings</h5>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="category-body">
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label>System Name</label>
+                                        <input type="text" class="form-control" name="setting_system_name" 
+                                               value="{{ settings.get('system', [])|selectattr('setting_key', 'equalto', 'system_name')|map(attribute='setting_value')|first }}">
+                                        <small class="text-muted">Name displayed throughout the system</small>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Admin Email</label>
+                                        <input type="email" class="form-control" name="setting_system_email"
+                                               value="{{ settings.get('system', [])|selectattr('setting_key', 'equalto', 'system_email')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Contact Phone</label>
+                                        <input type="text" class="form-control" name="setting_system_phone"
+                                               value="{{ settings.get('system', [])|selectattr('setting_key', 'equalto', 'system_phone')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>System Address</label>
+                                        <textarea class="form-control" name="setting_system_address" rows="2">{{ settings.get('system', [])|selectattr('setting_key', 'equalto', 'system_address')|map(attribute='setting_value')|first }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fee Configuration -->
+                        <div class="category-card" id="fees">
+                            <div class="category-header" onclick="toggleCategory(this)">
+                                <h5 class="mb-0"><i class="fas fa-rupee-sign me-2"></i> Fee Configuration</h5>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="category-body">
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label>Processing Fee (₹)</label>
+                                        <input type="number" class="form-control" name="setting_processing_fee"
+                                               value="{{ settings.get('processing', [])|selectattr('setting_key', 'equalto', 'processing_fee')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <h6 class="mb-3">Regular Pass</h6>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label>1 Month (₹)</label>
+                                        <input type="number" class="form-control" name="setting_pass_regular_1month"
+                                               value="{{ settings.get('pass', [])|selectattr('setting_key', 'equalto', 'pass_regular_1month')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>3 Months (₹)</label>
+                                        <input type="number" class="form-control" name="setting_pass_regular_3months"
+                                               value="{{ settings.get('pass', [])|selectattr('setting_key', 'equalto', 'pass_regular_3months')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>6 Months (₹)</label>
+                                        <input type="number" class="form-control" name="setting_pass_regular_6months"
+                                               value="{{ settings.get('pass', [])|selectattr('setting_key', 'equalto', 'pass_regular_6months')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                </div>
+                                
+                                <h6 class="mb-3 mt-3">Premium Pass</h6>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label>1 Month (₹)</label>
+                                        <input type="number" class="form-control" name="setting_pass_premium_1month"
+                                               value="{{ settings.get('pass', [])|selectattr('setting_key', 'equalto', 'pass_premium_1month')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>3 Months (₹)</label>
+                                        <input type="number" class="form-control" name="setting_pass_premium_3months"
+                                               value="{{ settings.get('pass', [])|selectattr('setting_key', 'equalto', 'pass_premium_3months')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>6 Months (₹)</label>
+                                        <input type="number" class="form-control" name="setting_pass_premium_6months"
+                                               value="{{ settings.get('pass', [])|selectattr('setting_key', 'equalto', 'pass_premium_6months')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                </div>
+
+                                <h6 class="mb-3 mt-3">Express Pass</h6>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label>1 Month (₹)</label>
+                                        <input type="number" class="form-control" name="setting_pass_express_1month"
+                                               value="{{ settings.get('pass', [])|selectattr('setting_key', 'equalto', 'pass_express_1month')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>3 Months (₹)</label>
+                                        <input type="number" class="form-control" name="setting_pass_express_3months"
+                                               value="{{ settings.get('pass', [])|selectattr('setting_key', 'equalto', 'pass_express_3months')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>6 Months (₹)</label>
+                                        <input type="number" class="form-control" name="setting_pass_express_6months"
+                                               value="{{ settings.get('pass', [])|selectattr('setting_key', 'equalto', 'pass_express_6months')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Document Settings -->
+                        <div class="category-card" id="documents">
+                            <div class="category-header" onclick="toggleCategory(this)">
+                                <h5 class="mb-0"><i class="fas fa-file-upload me-2"></i> Document Settings</h5>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="category-body">
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label>Max File Size (MB)</label>
+                                        <input type="number" class="form-control" name="setting_max_file_size"
+                                               value="{{ settings.get('max', [])|selectattr('setting_key', 'equalto', 'max_file_size')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>Allowed Extensions</label>
+                                        <input type="text" class="form-control" name="setting_allowed_extensions"
+                                               value="{{ settings.get('allowed', [])|selectattr('setting_key', 'equalto', 'allowed_extensions')|map(attribute='setting_value')|first }}">
+                                        <small class="text-muted">Comma separated (jpg,jpeg,png,pdf)</small>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>Require Previous Pass</label>
+                                        <div class="d-flex align-items-center mt-2">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" name="setting_require_previous_pass" value="1"
+                                                    {% if settings.get('require', [])|selectattr('setting_key', 'equalto', 'require_previous_pass')|map(attribute='setting_value')|first == '1' %}checked{% endif %}>
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <span class="ms-3">Yes, require for renewal</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notification Settings -->
+                        <div class="category-card" id="notifications">
+                            <div class="category-header" onclick="toggleCategory(this)">
+                                <h5 class="mb-0"><i class="fas fa-bell me-2"></i> Notification Settings</h5>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="category-body">
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label>Enable Email Notifications</label>
+                                        <div class="d-flex align-items-center mt-2">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" name="setting_enable_email_notifications" value="1"
+                                                    {% if settings.get('enable', [])|selectattr('setting_key', 'equalto', 'enable_email_notifications')|map(attribute='setting_value')|first == '1' %}checked{% endif %}>
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <span class="ms-3">Send emails to students</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Enable SMS Notifications</label>
+                                        <div class="d-flex align-items-center mt-2">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" name="setting_enable_sms_notifications" value="1"
+                                                    {% if settings.get('enable', [])|selectattr('setting_key', 'equalto', 'enable_sms_notifications')|map(attribute='setting_value')|first == '1' %}checked{% endif %}>
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <span class="ms-3">Send SMS (requires gateway)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h6 class="mb-3">SMTP Configuration</h6>
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label>SMTP Host</label>
+                                        <input type="text" class="form-control" name="setting_smtp_host"
+                                               value="{{ settings.get('smtp', [])|selectattr('setting_key', 'equalto', 'smtp_host')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>SMTP Port</label>
+                                        <input type="number" class="form-control" name="setting_smtp_port"
+                                               value="{{ settings.get('smtp', [])|selectattr('setting_key', 'equalto', 'smtp_port')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>SMTP Username</label>
+                                        <input type="text" class="form-control" name="setting_smtp_user"
+                                               value="{{ settings.get('smtp', [])|selectattr('setting_key', 'equalto', 'smtp_user')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>SMTP Password</label>
+                                        <input type="password" class="form-control" name="setting_smtp_password"
+                                               value="{{ settings.get('smtp', [])|selectattr('setting_key', 'equalto', 'smtp_password')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Application Rules -->
+                        <div class="category-card" id="application">
+                            <div class="category-header" onclick="toggleCategory(this)">
+                                <h5 class="mb-0"><i class="fas fa-file-alt me-2"></i> Application Rules</h5>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="category-body">
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label>Auto Approve</label>
+                                        <div class="d-flex align-items-center mt-2">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" name="setting_auto_approve" value="1"
+                                                    {% if settings.get('auto', [])|selectattr('setting_key', 'equalto', 'auto_approve')|map(attribute='setting_value')|first == '1' %}checked{% endif %}>
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <span class="ms-3">Auto approve after payment</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>Require Verification</label>
+                                        <div class="d-flex align-items-center mt-2">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" name="setting_require_verification" value="1"
+                                                    {% if settings.get('require', [])|selectattr('setting_key', 'equalto', 'require_verification')|map(attribute='setting_value')|first == '1' %}checked{% endif %}>
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <span class="ms-3">Admin must verify documents</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>Student Can Edit</label>
+                                        <div class="d-flex align-items-center mt-2">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" name="setting_student_can_edit" value="1"
+                                                    {% if settings.get('student', [])|selectattr('setting_key', 'equalto', 'student_can_edit')|map(attribute='setting_value')|first == '1' %}checked{% endif %}>
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <span class="ms-3">Allow editing after submission</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Max Applications Per Day</label>
+                                        <input type="number" class="form-control" name="setting_max_applications_per_day"
+                                               value="{{ settings.get('max', [])|selectattr('setting_key', 'equalto', 'max_applications_per_day')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Display & Theme -->
+                        <div class="category-card" id="display">
+                            <div class="category-header" onclick="toggleCategory(this)">
+                                <h5 class="mb-0"><i class="fas fa-paint-brush me-2"></i> Display & Theme</h5>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="category-body">
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label>Items Per Page</label>
+                                        <input type="number" class="form-control" name="setting_items_per_page"
+                                               value="{{ settings.get('items', [])|selectattr('setting_key', 'equalto', 'items_per_page')|map(attribute='setting_value')|first }}">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>Theme Color</label>
+                                        <select class="form-select" name="setting_theme_color">
+                                            {% set theme_color = settings.get('theme', [])|selectattr('setting_key', 'equalto', 'theme_color')|map(attribute='setting_value')|first %}
+                                            <option value="primary" {% if theme_color == 'primary' %}selected{% endif %}>Blue (Primary)</option>
+                                            <option value="success" {% if theme_color == 'success' %}selected{% endif %}>Green (Success)</option>
+                                            <option value="info" {% if theme_color == 'info' %}selected{% endif %}>Light Blue (Info)</option>
+                                            <option value="warning" {% if theme_color == 'warning' %}selected{% endif %}>Yellow (Warning)</option>
+                                            <option value="danger" {% if theme_color == 'danger' %}selected{% endif %}>Red (Danger)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>Date Format</label>
+                                        <input type="text" class="form-control" name="setting_date_format"
+                                               value="{{ settings.get('date', [])|selectattr('setting_key', 'equalto', 'date_format')|map(attribute='setting_value')|first }}">
+                                        <small class="text-muted">d/m/Y, m/d/Y, Y-m-d etc.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Settings -->
+                        <div class="category-card" id="advanced">
+                            <div class="category-header" onclick="toggleCategory(this)">
+                                <h5 class="mb-0"><i class="fas fa-code me-2"></i> Advanced Settings</h5>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="category-body">
+                                <p class="text-muted">Advanced configuration options. Change only if you know what you're doing.</p>
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle"></i> Incorrect settings may break the system.
+                                </div>
+                                <!-- Additional advanced settings can be added here -->
+                            </div>
+                        </div>
+
+                        <!-- Save Bar -->
+                        <div class="save-bar">
+                            <button type="button" class="btn btn-secondary" onclick="window.location.reload();">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary px-5">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle category collapse
+        function toggleCategory(header) {
+            header.classList.toggle('collapsed');
+            const body = header.nextElementSibling;
+            if (body.style.display === 'none') {
+                body.style.display = 'block';
+            } else {
+                body.style.display = 'none';
+            }
+        }
+
+        // Scroll to section and update active nav
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                
+                // Update active nav link
+                document.querySelectorAll('.settings-nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                event.target.classList.add('active');
+            }
+        }
+
+        // Auto-hide flash messages after 5 seconds
+        setTimeout(() => {
+            document.querySelectorAll('.alert-messages .alert').forEach(alert => {
+                alert.style.transition = 'opacity 0.5s';
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 5000);
+
+        // Confirm before leaving with unsaved changes
+        let formChanged = false;
+        document.querySelector('.settings-form').addEventListener('change', function() {
+            formChanged = true;
+        });
+        
+        window.addEventListener('beforeunload', function(e) {
+            if (formChanged) {
+                e.preventDefault();
+                e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+            }
+        });
+        
+        document.querySelector('.settings-form').addEventListener('submit', function() {
+            formChanged = false;
+        });
+    </script>
+</body>
+</html>
