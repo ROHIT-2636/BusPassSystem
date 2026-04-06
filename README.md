@@ -47,18 +47,19 @@ Before running this project, make sure you have the following installed:
 1. Click on Code button (green color)
 2. Select Download ZIP
 3. Extract the ZIP file
-4. Open terminal/cmd in the extracted folder
+4. Open  terminal/cmd in the extracted folder or open folder in VS Code (Safe) & right click on app.py file then select 'Open in integrated terminal'.
 
 ### Step 2: Create Virtual Environment 
 Windows:
+
 python -m venv venv
 venv\Scripts\activate
--------------------
+
 
 Mac: 
 python3 -m venv venv
 source venv/bin/activate
-----------------
+
 
 After activation, you will see (venv) at the beginning of your terminal line.
 
