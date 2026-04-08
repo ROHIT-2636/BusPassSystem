@@ -32,7 +32,7 @@ def allowed_file(filename):
 db_config = {
     'host': 'localhost',
     'user': 'root',
-    'password': '384834',
+    'password': ' ', #Write Your Database password here otherwise For XAMPP Username: `root` &  Password: *(blank)*
     'database': 'bus_pass_system',
     'cursorclass': pymysql.cursors.DictCursor
 }
