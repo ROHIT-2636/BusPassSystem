@@ -14,7 +14,7 @@ app = Flask(__name__, static_folder='static')
 app.jinja_env.globals.update(now=datetime.now)
 
 # ---------- SECRET KEY (ONLY ONCE) ----------
-app.secret_key = 'bus_pass_secret_key_2024'
+app.secret_key = 'bus_pass_secret_key_2026'
 
 # ---------- FILE UPLOAD CONFIG ----------
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
