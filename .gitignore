@@ -2,3 +2,10 @@ report/
 output/
 venv/
 __pycache__/
+static/uploads/
+*.jpg
+*.jpeg
+*.png
+*.pdf
+*.doc
+*.docx
