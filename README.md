@@ -108,7 +108,7 @@ pip list
 **Windows:**
 
 * Open XAMPP → Start MySQL
-  OR
+         {   OR    }
 * Open MySQL Workbench → Connect to local instance
 
 **Mac/Linux:**
